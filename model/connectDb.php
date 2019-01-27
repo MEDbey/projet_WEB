@@ -2,14 +2,9 @@
 class connectDb{
     public static function dbConnect()
     {
-        $hostname = "localhost";	//ou localhost
-        $base= "edt";
-        $loginBD= "root";	//ou "root"
-        $passBD="";
-
         try
         {
-            $db = new PDO("mysql:server=$hostname; dbname=$base", "$loginBD", "$passBD");
+            $db = new PDO("mysql:server=localhost; dbname=edt", "root", "");
             return $db;
         }
         catch(Exception $e)
