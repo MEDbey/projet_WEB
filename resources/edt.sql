@@ -1,17 +1,25 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:8889
--- Généré le :  mer. 24 oct. 2018 à 20:07
--- Version du serveur :  5.7.23
--- Version de PHP :  7.2.8
+-- Hôte : 127.0.0.1
+-- Généré le :  lun. 28 jan. 2019 à 20:32
+-- Version du serveur :  10.1.26-MariaDB
+-- Version de PHP :  7.1.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
--- Base de données :  `proj`
+-- Base de données :  `edt`
 --
 
 -- --------------------------------------------------------
@@ -23,7 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `completude` (
   `id_complet` int(11) NOT NULL,
   `id_period` int(11) NOT NULL,
-  `id_mat` int(11) DEFAULT NULL,
+  `id_mat` int(4) NOT NULL,
   `id_prof` int(11) DEFAULT NULL,
   `tDeb` int(11) NOT NULL,
   `tFin` int(11) NOT NULL
@@ -34,7 +42,7 @@ CREATE TABLE `completude` (
 --
 
 INSERT INTO `completude` (`id_complet`, `id_period`, `id_mat`, `id_prof`, `tDeb`, `tFin`) VALUES
-(1, 2, 1, 1, 0, 0);
+(1, 2, 1, 2, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -45,7 +53,7 @@ INSERT INTO `completude` (`id_complet`, `id_period`, `id_mat`, `id_prof`, `tDeb`
 CREATE TABLE `contrainte` (
   `id_cont` int(11) NOT NULL,
   `bPositive` tinyint(4) NOT NULL DEFAULT '0',
-  `id_mat` int(11) DEFAULT NULL,
+  `id_mat` int(4) DEFAULT NULL,
   `id_prof` int(11) DEFAULT NULL,
   `id_salle` int(11) DEFAULT NULL,
   `type_cont` text COLLATE utf8_bin NOT NULL,
@@ -73,7 +81,7 @@ CREATE TABLE `creneau` (
   `tDeb` int(11) NOT NULL,
   `tFin` int(11) NOT NULL,
   `id_edth` int(11) NOT NULL,
-  `id_mat` int(11) NOT NULL,
+  `id_mat` int(4) NOT NULL,
   `id_prof` int(11) NOT NULL,
   `id_grpe` int(11) NOT NULL,
   `id_salle` int(11) NOT NULL
@@ -136,7 +144,7 @@ INSERT INTO `edth` (`id_edth`, `tDeb`, `label`, `bCourant`) VALUES
 
 CREATE TABLE `edtperiod` (
   `id_period` int(11) NOT NULL,
-  `id_promo` int(11) NOT NULL,
+  `id_promo` tinyint(4) NOT NULL,
   `label` text COLLATE utf8_bin NOT NULL,
   `tDeb` int(11) NOT NULL,
   `tFin` int(11) NOT NULL
@@ -158,7 +166,7 @@ INSERT INTO `edtperiod` (`id_period`, `id_promo`, `label`, `tDeb`, `tFin`) VALUE
 
 CREATE TABLE `etudiant` (
   `id_etu` int(11) NOT NULL,
-  `id_promo` int(11) NOT NULL,
+  `id_promo` tinyint(4) NOT NULL,
   `id_grpe` int(11) NOT NULL,
   `genre` text COLLATE utf8_bin NOT NULL,
   `nom` text COLLATE utf8_bin NOT NULL,
@@ -251,7 +259,7 @@ INSERT INTO `formation` (`id_form`, `nom`, `label`) VALUES
 
 CREATE TABLE `groupe` (
   `id_grpe` int(11) NOT NULL,
-  `id_promo` int(11) NOT NULL,
+  `id_promo` tinyint(4) NOT NULL,
   `type_grpe` text COLLATE utf8_bin NOT NULL,
   `num_grpe` text COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -301,13 +309,13 @@ CREATE TABLE `matiere` (
 --
 
 INSERT INTO `matiere` (`id_mat`, `id_ue`, `id_mod`, `id_period`, `nom`, `label`, `nbH`, `couleur`, `themes`, `typeEns`) VALUES
-(1, 1, 1, 1, 'Programmation WEB côté Serveur (M3104)', 'PWEB MVC', 25, '#1DE124', '{\n\"web\":\"Client Serveur HTTP\", \n\"pattern\":\"MVC\",\n\"Langage\":\"PHP\"\n}\n', '{\n\"A\":[\"promo\", 1.5],\n\'M\':[\"bi\",3]\n}'),
-(2, 1, 1, 2, 'Programmation WEB côté Serveur - JAVA (M3104-2)', 'PWEB JAVA', 12, '', '{\n\"Systeme WEB\":\"Client Serveur HTTP\", \n\"Langage\":\"JAVA\"\n}\n', '{\n\"A\":[\"promo\",1.5],\n\"M\":[\"bi\",3]\n}'),
-(9, 1, 1, 1, 'Algorithmique avancée', 'AAV', 20, '', '{\"complexite\": \"tri\"}', '{\n\"A\":[\"promo\",1.5],\n\"T\":[\"bi\",1.5],\n\"M\":[\"mono\",1.5]\n}'),
-(14, 2, 1, 1, 'Anglais', 'ANG', 12, '', 'vocabulaire', '{\"M\":[\"mono\",1.5]}'),
-(15, 2, 1, 1, 'Expression Communication', 'EC', 20, '', '{\n\"expression\":\"écriture de rapport de stage\",\n\"communication\":\"soutenance orale\"\n}', '{\n\"T\":[\"bi\",1.5]\n}'),
-(16, 1, 1, 1, 'Modélisation Objet', 'MO', 25, '', '{\"modele\" : \"UML\"}', '{\"A\":[\"promo\",1.5],\n\'M\':[\"bi\",3]\n}'),
-(17, 2, 1, 1, 'PROBA STAT', 'PS', 20, '', '{\"proba\": [\"espace\"], \n\"stat\": [\"régression\"]}', '{ \"A\":[\"promo\",1.5], \"M\":[\"bi\",3] }');
+(1, 1, 3, 1, 'Programmation WEB côté Serveur (M3104)', 'PWEB MVC', 25, '#1DE124', '{\n\"web\":\"Client Serveur HTTP\", \n\"pattern\":\"MVC\",\n\"Langage\":\"PHP\"\n}\n', '{\n\"A\":[\"promo\", 1.5],\n\'M\':[\"bi\",3]\n}'),
+(2, 1, 3, 2, 'Programmation WEB côté Serveur - JAVA (M3104-2)', 'PWEB JAVA', 12, '', '{\n\"Systeme WEB\":\"Client Serveur HTTP\", \n\"Langage\":\"JAVA\"\n}\n', '{\n\"A\":[\"promo\",1.5],\n\"M\":[\"bi\",3]\n}'),
+(9, 1, 4, 1, 'Algorithmique avancée', 'AAV', 20, '', '{\"complexite\": \"tri\"}', '{\n\"A\":[\"promo\",1.5],\n\"T\":[\"bi\",1.5],\n\"M\":[\"mono\",1.5]\n}'),
+(14, 2, 8, 1, 'Anglais', 'ANG', 12, '', 'vocabulaire', '{\"M\":[\"mono\",1.5]}'),
+(15, 2, 7, 1, 'Expression Communication', 'EC', 20, '', '{\n\"expression\":\"écriture de rapport de stage\",\n\"communication\":\"soutenance orale\"\n}', '{\n\"T\":[\"bi\",1.5]\n}'),
+(16, 1, 5, 1, 'Modélisation Objet', 'MO', 25, '', '{\"modele\" : \"UML\"}', '{\"A\":[\"promo\",1.5],\n\'M\':[\"bi\",3]\n}'),
+(17, 2, 6, 1, 'PROBA STAT', 'PS', 20, '', '{\"proba\": [\"espace\"], \n\"stat\": [\"régression\"]}', '{ \"A\":[\"promo\",1.5], \"M\":[\"bi\",3] }');
 
 -- --------------------------------------------------------
 
@@ -331,7 +339,7 @@ CREATE TABLE `message` (
 
 CREATE TABLE `period` (
   `id_period` int(11) NOT NULL,
-  `id_promo` int(11) NOT NULL,
+  `id_promo` tinyint(4) NOT NULL,
   `label` text NOT NULL,
   `tDeb` int(11) NOT NULL,
   `tFin` int(11) NOT NULL
@@ -442,8 +450,6 @@ INSERT INTO `prof_roles` (`id_role`, `objet`, `id_objet`, `bResp`, `id_prof`, `l
 (8, 'matiere', 14, 1, 9, 'Responsable ANG'),
 (9, 'matiere', 10, 1, 7, 'Responsable EC'),
 (10, 'matiere', 16, 1, 6, 'Responsable MO'),
-(12, 'matiere', 17, 1, 1, 'Responsable PROBA STAT'),
-(13, 'matiere', 1, 0, 1, 'Intervenant PWEB'),
 (14, 'matiere', 1, 0, 3, 'Intervenant PWEB'),
 (15, 'matiere', 9, 0, 4, 'Intervenant AAV'),
 (16, 'matiere', 17, 0, 5, 'Intervenant PROBA STAT'),
@@ -471,7 +477,7 @@ CREATE TABLE `promotion` (
 INSERT INTO `promotion` (`id_promo`, `id_form`, `num`, `label`) VALUES
 (1, 1, 2018, 'INFOA1 2018'),
 (2, 1, 2018, 'INFOA2 2018'),
-(3, 2, 2018, 'LPIOT 2018'),
+(3, 5, 2018, 'LPIOT 2018'),
 (4, 3, 2018, 'LPERP-A 2018'),
 (5, 4, 2018, 'LPERP-I 2018');
 
@@ -533,7 +539,7 @@ INSERT INTO `uemodule` (`id_uemod`, `id_form`, `classif`, `nom`, `label`) VALUES
 (5, 1, 'module', 'Conception et programmation objet avancées', '3105'),
 (6, 1, 'module', 'Probabilités et statistiques', '3201'),
 (7, 1, 'module', 'Expression-Communication – Communication\r\nprofessionnelle', '3205'),
-(8, 1, 'module', 'Collaborer en anglais', '3206');
+(8, 1, 'module', 'Collaborer en anglais', '3206'));
 
 --
 -- Index pour les tables déchargées
@@ -543,19 +549,30 @@ INSERT INTO `uemodule` (`id_uemod`, `id_form`, `classif`, `nom`, `label`) VALUES
 -- Index pour la table `completude`
 --
 ALTER TABLE `completude`
-  ADD PRIMARY KEY (`id_complet`);
+  ADD PRIMARY KEY (`id_complet`),
+  ADD KEY `fk_coplet_period` (`id_period`),
+  ADD KEY `fk_coplet_prof` (`id_prof`),
+  ADD KEY `fk_coplet_mate` (`id_mat`);
 
 --
 -- Index pour la table `contrainte`
 --
 ALTER TABLE `contrainte`
-  ADD PRIMARY KEY (`id_cont`);
+  ADD PRIMARY KEY (`id_cont`),
+  ADD KEY `fk_contr_mate` (`id_mat`),
+  ADD KEY `fk_contr_prof` (`id_prof`),
+  ADD KEY `fk_contr_salle` (`id_salle`);
 
 --
 -- Index pour la table `creneau`
 --
 ALTER TABLE `creneau`
-  ADD PRIMARY KEY (`id_creneau`);
+  ADD PRIMARY KEY (`id_creneau`),
+  ADD KEY `fk_cren_edth` (`id_edth`),
+  ADD KEY `fk_cren_prof` (`id_prof`),
+  ADD KEY `fk_cren_mat` (`id_mat`),
+  ADD KEY `fk_cren_group` (`id_grpe`),
+  ADD KEY `fk_cren_sall` (`id_salle`);
 
 --
 -- Index pour la table `edth`
@@ -567,19 +584,23 @@ ALTER TABLE `edth`
 -- Index pour la table `edtperiod`
 --
 ALTER TABLE `edtperiod`
-  ADD PRIMARY KEY (`id_period`);
+  ADD PRIMARY KEY (`id_period`),
+  ADD KEY `fk_edtperio_promo` (`id_promo`);
 
 --
 -- Index pour la table `etudiant`
 --
 ALTER TABLE `etudiant`
-  ADD PRIMARY KEY (`id_etu`);
+  ADD PRIMARY KEY (`id_etu`),
+  ADD KEY `fk_etudi_promo` (`id_promo`),
+  ADD KEY `fk_etudi_group` (`id_grpe`);
 
 --
 -- Index pour la table `etu_grps`
 --
 ALTER TABLE `etu_grps`
-  ADD UNIQUE KEY `index_etuGrp` (`id_etu`,`id_grpe`) USING BTREE;
+  ADD UNIQUE KEY `index_etuGrp` (`id_etu`,`id_grpe`) USING BTREE,
+  ADD KEY `fk_etu_grps_group` (`id_grpe`);
 
 --
 -- Index pour la table `formation`
@@ -591,13 +612,15 @@ ALTER TABLE `formation`
 -- Index pour la table `groupe`
 --
 ALTER TABLE `groupe`
-  ADD PRIMARY KEY (`id_grpe`);
+  ADD PRIMARY KEY (`id_grpe`),
+  ADD KEY `fk_group_promo` (`id_promo`);
 
 --
 -- Index pour la table `matiere`
 --
 ALTER TABLE `matiere`
-  ADD PRIMARY KEY (`id_mat`);
+  ADD PRIMARY KEY (`id_mat`),
+  ADD KEY `fk_mat_period` (`id_period`);
 
 --
 -- Index pour la table `message`
@@ -609,7 +632,8 @@ ALTER TABLE `message`
 -- Index pour la table `period`
 --
 ALTER TABLE `period`
-  ADD PRIMARY KEY (`id_period`);
+  ADD PRIMARY KEY (`id_period`),
+  ADD KEY `fk_period_promo` (`id_promo`);
 
 --
 -- Index pour la table `prof`
@@ -627,13 +651,15 @@ ALTER TABLE `professeur`
 -- Index pour la table `prof_roles`
 --
 ALTER TABLE `prof_roles`
-  ADD PRIMARY KEY (`id_role`);
+  ADD PRIMARY KEY (`id_role`),
+  ADD KEY `fk_pr_rol_prof` (`id_prof`);
 
 --
 -- Index pour la table `promotion`
 --
 ALTER TABLE `promotion`
-  ADD PRIMARY KEY (`id_promo`);
+  ADD PRIMARY KEY (`id_promo`),
+  ADD KEY `fk_promo_format` (`id_form`);
 
 --
 -- Index pour la table `salle`
@@ -645,7 +671,8 @@ ALTER TABLE `salle`
 -- Index pour la table `uemodule`
 --
 ALTER TABLE `uemodule`
-  ADD PRIMARY KEY (`id_uemod`);
+  ADD PRIMARY KEY (`id_uemod`),
+  ADD KEY `fk_modul_format` (`id_form`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -656,93 +683,168 @@ ALTER TABLE `uemodule`
 --
 ALTER TABLE `completude`
   MODIFY `id_complet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT pour la table `contrainte`
 --
 ALTER TABLE `contrainte`
   MODIFY `id_cont` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT pour la table `creneau`
 --
 ALTER TABLE `creneau`
   MODIFY `id_creneau` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
 --
 -- AUTO_INCREMENT pour la table `edth`
 --
 ALTER TABLE `edth`
   MODIFY `id_edth` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
 --
 -- AUTO_INCREMENT pour la table `edtperiod`
 --
 ALTER TABLE `edtperiod`
   MODIFY `id_period` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT pour la table `etudiant`
 --
 ALTER TABLE `etudiant`
   MODIFY `id_etu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
 -- AUTO_INCREMENT pour la table `formation`
 --
 ALTER TABLE `formation`
   MODIFY `id_form` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT pour la table `groupe`
 --
 ALTER TABLE `groupe`
   MODIFY `id_grpe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
 --
 -- AUTO_INCREMENT pour la table `matiere`
 --
 ALTER TABLE `matiere`
   MODIFY `id_mat` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
 --
 -- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
   MODIFY `id_msg` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT pour la table `period`
 --
 ALTER TABLE `period`
   MODIFY `id_period` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT pour la table `prof`
 --
 ALTER TABLE `prof`
   MODIFY `id_prof` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
 -- AUTO_INCREMENT pour la table `professeur`
 --
 ALTER TABLE `professeur`
   MODIFY `id_prof` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
 -- AUTO_INCREMENT pour la table `prof_roles`
 --
 ALTER TABLE `prof_roles`
   MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
 --
 -- AUTO_INCREMENT pour la table `salle`
 --
 ALTER TABLE `salle`
   MODIFY `id_salle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
 --
 -- AUTO_INCREMENT pour la table `uemodule`
 --
 ALTER TABLE `uemodule`
-  MODIFY `id_uemod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_uemod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `completude`
+--
+ALTER TABLE `completude`
+  ADD CONSTRAINT `fk_coplet_mate` FOREIGN KEY (`id_mat`) REFERENCES `matiere` (`id_mat`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_coplet_period` FOREIGN KEY (`id_period`) REFERENCES `period` (`id_period`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_coplet_prof` FOREIGN KEY (`id_prof`) REFERENCES `prof` (`id_prof`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `contrainte`
+--
+ALTER TABLE `contrainte`
+  ADD CONSTRAINT `fk_contr_mate` FOREIGN KEY (`id_mat`) REFERENCES `matiere` (`id_mat`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_contr_prof` FOREIGN KEY (`id_prof`) REFERENCES `prof` (`id_prof`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_contr_salle` FOREIGN KEY (`id_salle`) REFERENCES `salle` (`id_salle`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `creneau`
+--
+ALTER TABLE `creneau`
+  ADD CONSTRAINT `fk_cren_edth` FOREIGN KEY (`id_edth`) REFERENCES `edth` (`id_edth`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_cren_group` FOREIGN KEY (`id_grpe`) REFERENCES `groupe` (`id_grpe`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_cren_mat` FOREIGN KEY (`id_mat`) REFERENCES `matiere` (`id_mat`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_cren_prof` FOREIGN KEY (`id_prof`) REFERENCES `prof` (`id_prof`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_cren_sall` FOREIGN KEY (`id_salle`) REFERENCES `salle` (`id_salle`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `edtperiod`
+--
+ALTER TABLE `edtperiod`
+  ADD CONSTRAINT `fk_edtperio_promo` FOREIGN KEY (`id_promo`) REFERENCES `promotion` (`id_promo`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `etudiant`
+--
+ALTER TABLE `etudiant`
+  ADD CONSTRAINT `fk_etudi_group` FOREIGN KEY (`id_grpe`) REFERENCES `groupe` (`id_grpe`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_etudi_promo` FOREIGN KEY (`id_promo`) REFERENCES `promotion` (`id_promo`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `etu_grps`
+--
+ALTER TABLE `etu_grps`
+  ADD CONSTRAINT `fk_etu_grps_etudi` FOREIGN KEY (`id_etu`) REFERENCES `etudiant` (`id_etu`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_etu_grps_group` FOREIGN KEY (`id_grpe`) REFERENCES `groupe` (`id_grpe`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `groupe`
+--
+ALTER TABLE `groupe`
+  ADD CONSTRAINT `fk_group_promo` FOREIGN KEY (`id_promo`) REFERENCES `promotion` (`id_promo`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `matiere`
+--
+ALTER TABLE `matiere`
+  ADD CONSTRAINT `fk_mat_period` FOREIGN KEY (`id_period`) REFERENCES `period` (`id_period`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `period`
+--
+ALTER TABLE `period`
+  ADD CONSTRAINT `fk_period_promo` FOREIGN KEY (`id_promo`) REFERENCES `promotion` (`id_promo`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `prof_roles`
+--
+ALTER TABLE `prof_roles`
+  ADD CONSTRAINT `fk_pr_rol_prof` FOREIGN KEY (`id_prof`) REFERENCES `prof` (`id_prof`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `promotion`
+--
+ALTER TABLE `promotion`
+  ADD CONSTRAINT `fk_promo_format` FOREIGN KEY (`id_form`) REFERENCES `formation` (`id_form`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `uemodule`
+--
+ALTER TABLE `uemodule`
+  ADD CONSTRAINT `fk_modul_format` FOREIGN KEY (`id_form`) REFERENCES `formation` (`id_form`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
