@@ -122,34 +122,53 @@
                 for (var o in object) {
                     var item = object[o];
                     //Insertion des modules dans le tableau
-                    $('<div class="row edt" id= row' + item.id + '>' +
-                        '<div class="cellules titre droppable silver" id=' + item.id + '>' + item.nom + '</div>').insertAfter($('#H'));
+                    $('<div class="row edt" id= row' + item.id + '>' +'<div class="cellules cell_clickable titre droppable silver" id=' + item.id + '>' + item.nom + '</div>').insertAfter($('#H'));
                     //Insertion de la colonne des totaux par module
                     for (var i = 1; i < nb_col; i++) {
-                        $('#row' + item.id).append('<div class="cellules cell_clickable titre droppable silver" id=' + item.id + '-' + i + '></div>');
+                        $('#row' + item.id).append('<div class="cellules titre droppable silver" id=' + item.id + '-' + i + '></div>');
                     }
                     $('#row' + item.id).append('<div class="cellules total silver text-center" id=totm-' + item.id + '>0</div>');
-                    //Insertion des modules dans le select
-                    $('#select_module').append('<option id=' + item.id + '>' + item.nom + '</option>');
+
+                    console.log('module' + item.id);
+                    var id_module = item.id;
+                    // $.get(baseurl + "?controle=MatiereController&action=showByModule&id=" + id_module, function(data, status) {
+                    //     var object = JSON.parse(data);
+                    //     for (var o in object) {
+                    //         console.log(object);
+                    //         var item = object[o];
+                    //         $('<div class="row edt" id= row' + item.id + '>' + '<div class="cellules titre droppable " id=' + item.id + '>' + item.nom + '</div>').insertAfter($('#row' +id_module));
+                    //         //Insertion de la colonne des totaux par module
+                    //         for (var i = 1; i < nb_col; i++) {
+                    //             $('#row' + item.id).append('<div class="cellules cell_clickable titre droppable " id=' + item.id + '-' + i + '></div>');
+                    //         }
+                    //         $('#row' + item.id).append('<div class="cellules total  text-center" id=totm-' + item.id + '>0</div>');
+                    //         console.log('matiere' + item.id);
+                    //     }
+                    // });
+
                 }
-                ////////////////////////////////////////////
-                //click sur la div pour ajouter un créneau//
-                ////////////////////////////////////////////
+                //////////////////////////////////////////////
+               ///click sur la div pour ajouter un créneau///
+              //////////////////////////////////////////////
                 $('.cell_clickable').click(function(){
                     var id_module_cell = $(this).attr('id');
-                    var id_this = $(this).attr('id').split('-');
-                    var id_module = id_this[0];
-                    $.get(baseurl + "?controle=MatiereController&action=showByModule&id=" + id_module, function(data, status) {
+                    $.get(baseurl + "?controle=MatiereController&action=showByModule&id=" + id_module_cell, function(data, status) {
                         var object = JSON.parse(data);
                         for (var o in object) {
                             var item = object[o];
-                            $('#'+id_module_cell).append('<p>' + item.nom + '</p>');
-                            console.log(item.nom);
+                            $('<div class="row edt" id= "row' + item.id + '_matiere">' + '<div class="cellules cellule_matiere_' + item.id + ' titre droppable " id=' + item.id + '>' + item.nom + '</div>').insertAfter($('#row' +id_module_cell));
+                            for (var i = 1; i < nb_col; i++) {
+                                $('#row' + item.id + '_matiere').append('<div class="cellules cellule_matiere_' + item.id + ' titre droppable" id=' + item.id + '-' + i + '></div>');
+                            }
+                            $('#row' + item.id + '_matiere').append('<div class="cellules cellule_matiere_' + item.id + ' total text-center" id=totm-' + item.id + '>0</div>');
+                            // alert(item.couleur);
+                            $('.cellule_matiere_' + item.id).css('background-color' , item.couleur);
                         }
                     });
                 });
-
+                $('.cell_clickable').trigger('click');
             });
+            
 
         $('#ajout_creneau').on('click', function(){
             $('#select_form').css("display", "block");
