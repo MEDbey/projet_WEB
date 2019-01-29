@@ -309,13 +309,13 @@ CREATE TABLE `matiere` (
 --
 
 INSERT INTO `matiere` (`id_mat`, `id_ue`, `id_mod`, `id_period`, `nom`, `label`, `nbH`, `couleur`, `themes`, `typeEns`) VALUES
-(1, 1, 3, 1, 'Programmation WEB côté Serveur (M3104)', 'PWEB MVC', 25, '#1DE124', '{\n\"web\":\"Client Serveur HTTP\", \n\"pattern\":\"MVC\",\n\"Langage\":\"PHP\"\n}\n', '{\n\"A\":[\"promo\", 1.5],\n\'M\':[\"bi\",3]\n}'),
-(2, 1, 3, 2, 'Programmation WEB côté Serveur - JAVA (M3104-2)', 'PWEB JAVA', 12, '', '{\n\"Systeme WEB\":\"Client Serveur HTTP\", \n\"Langage\":\"JAVA\"\n}\n', '{\n\"A\":[\"promo\",1.5],\n\"M\":[\"bi\",3]\n}'),
-(9, 1, 4, 1, 'Algorithmique avancée', 'AAV', 20, '', '{\"complexite\": \"tri\"}', '{\n\"A\":[\"promo\",1.5],\n\"T\":[\"bi\",1.5],\n\"M\":[\"mono\",1.5]\n}'),
-(14, 2, 8, 1, 'Anglais', 'ANG', 12, '', 'vocabulaire', '{\"M\":[\"mono\",1.5]}'),
-(15, 2, 7, 1, 'Expression Communication', 'EC', 20, '', '{\n\"expression\":\"écriture de rapport de stage\",\n\"communication\":\"soutenance orale\"\n}', '{\n\"T\":[\"bi\",1.5]\n}'),
-(16, 1, 5, 1, 'Modélisation Objet', 'MO', 25, '', '{\"modele\" : \"UML\"}', '{\"A\":[\"promo\",1.5],\n\'M\':[\"bi\",3]\n}'),
-(17, 2, 6, 1, 'PROBA STAT', 'PS', 20, '', '{\"proba\": [\"espace\"], \n\"stat\": [\"régression\"]}', '{ \"A\":[\"promo\",1.5], \"M\":[\"bi\",3] }');
+(1, 1, 3, 2, 'Programmation WEB côté Serveur (M3104)', 'PWEB MVC', 25, '#1DE124', '{\n\"web\":\"Client Serveur HTTP\", \n\"pattern\":\"MVC\",\n\"Langage\":\"PHP\"\n}\n', '{\n\"A\":[\"promo\", 1.5],\n\'M\':[\"bi\",3]\n}'),
+(2, 1, 3, 3, 'Programmation WEB côté Serveur - JAVA (M3104-2)', 'PWEB JAVA', 12, '', '{\n\"Systeme WEB\":\"Client Serveur HTTP\", \n\"Langage\":\"JAVA\"\n}\n', '{\n\"A\":[\"promo\",1.5],\n\"M\":[\"bi\",3]\n}'),
+(9, 1, 4, 2, 'Algorithmique avancée', 'AAV', 20, '', '{\"complexite\": \"tri\"}', '{\n\"A\":[\"promo\",1.5],\n\"T\":[\"bi\",1.5],\n\"M\":[\"mono\",1.5]\n}'),
+(14, 2, 8, 2, 'Anglais', 'ANG', 12, '', 'vocabulaire', '{\"M\":[\"mono\",1.5]}'),
+(15, 2, 7, 2, 'Expression Communication', 'EC', 20, '', '{\n\"expression\":\"écriture de rapport de stage\",\n\"communication\":\"soutenance orale\"\n}', '{\n\"T\":[\"bi\",1.5]\n}'),
+(16, 1, 5, 2, 'Modélisation Objet', 'MO', 25, '', '{\"modele\" : \"UML\"}', '{\"A\":[\"promo\",1.5],\n\'M\':[\"bi\",3]\n}'),
+(17, 2, 6, 2, 'PROBA STAT', 'PS', 20, '', '{\"proba\": [\"espace\"], \n\"stat\": [\"régression\"]}', '{ \"A\":[\"promo\",1.5], \"M\":[\"bi\",3] }');
 
 -- --------------------------------------------------------
 
