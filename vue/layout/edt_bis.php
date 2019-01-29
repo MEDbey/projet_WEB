@@ -110,6 +110,7 @@
 			</div>
 		</div>
 	</div>
+    <div class="dropmomo supri"> momo</div>
 	<script>
 		$(document).ready(function(){
 
@@ -171,10 +172,28 @@
                             $('.cellule_matiere_' + item.id).on('click',function(){
                                 $(this).html('<div class=" container_nb_heure container_heure_'+ item.id +' drag" style="background-color:'+item.couleur+'; width:100px; height:25px;">'+item.nbHeure+'</div>');
                                 $('.cell_mat').droppable();
-                                $('.drag').draggable();
+                                $('.drag').draggable({
+                                    drop : function( event, ui){
+                                        //ui.draggable.appendTo($(this));
+                                        // console.log();
+                                        // console.log($(this));
+                                        // event.target.append(ui.draggable element)
+                                        // (this).append(element);
+                                       // $
+                                    }
+                                });
                                 var cpt_tot_m = 0;
                                 cpt_tot_m = item.nbHeure ;
                                 $('#totm-'+id_module_cell+'-'+item.id).html(cpt_tot_m);
+                                $('.supri').droppable({
+                                    drop : function( event, ui){
+                                        console.log();              ////////////MOMOMOMO
+                                        console.log($(this));
+                                        console.log(event.target);
+                                       // $(this).append(element);
+                                       ui.draggable.remove();
+                                    }
+                                });
                             });
                         }
                     });
