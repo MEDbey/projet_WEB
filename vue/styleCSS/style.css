@@ -24,7 +24,10 @@ body 	{ padding-top:50px; margin-left:2em}
 .titre {font-weight: bold}
 
 
-	
+
+.cell_mat{
+	text-align:center;
+}
 /*éviter les débordements de texte sur l'EDT*/
 #edt {word-wrap: break-word}
 /* et pas de débordement de cellules flottantes

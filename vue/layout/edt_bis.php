@@ -11,15 +11,18 @@
 	<link rel="stylesheet" type="text/css" href="./vue/styleCSS/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="./vue/styleCSS/normalize.css" />
 	<script src="./vue/scripts/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="./vue/scripts/bootstrap.js"></script>
 </head>
 <!-- BODY -->
 
 <body>
+    
 	<div class="row">
 		<div class="col-md-6 offset-md-2">
 			<div class="row">
 				<div class="zone col-md-6" id="btns">
+                <div class='draggable'> test </div>
 					<button class="btn btn-info" id="ajout_creneau">Ajouter un créneau</button>
 					<button id="mymodal" class="btn btn-info" data-toggle="modal" data-target="#myModal">Créer un module</button>
 					<button class="btn btn-info" id="create_matiere">Créer une matiére</button>
@@ -60,6 +63,26 @@
 							<div class="modal-body">
 							<form action="service/CreateModule.php" method="post">
 								Nom du Module : <input type='text' id='nom_module' name='nom_module' class='form-control'/>
+								<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+								<input type="submit" class="btn btn-primary"/>
+								</div>
+							</form>
+							</div>
+							
+					 	</div>
+					</div>
+
+                    <div class="modal fade" id="modalAjoutCreneau" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+					  	<div class="modal-content">
+							<div class="modal-header">
+								<h5 id="myModalLabel">Ajouter un Créneau</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							</div>
+							<div class="modal-body">
+							<form action="" method="post">
+							    nombre d'heure : <input type='number' id='bn_heure' class='form-control'/>
 								<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
 								<input type="submit" class="btn btn-primary"/>
@@ -127,29 +150,11 @@
                     for (var i = 1; i < nb_col; i++) {
                         $('#row' + item.id).append('<div class="cellules titre droppable silver" id=' + item.id + '-' + i + '></div>');
                     }
-                    $('#row' + item.id).append('<div class="cellules total silver text-center" id=totm-' + item.id + '>0</div>');
-
-                    console.log('module' + item.id);
-                    var id_module = item.id;
-                    // $.get(baseurl + "?controle=MatiereController&action=showByModule&id=" + id_module, function(data, status) {
-                    //     var object = JSON.parse(data);
-                    //     for (var o in object) {
-                    //         console.log(object);
-                    //         var item = object[o];
-                    //         $('<div class="row edt" id= row' + item.id + '>' + '<div class="cellules titre droppable " id=' + item.id + '>' + item.nom + '</div>').insertAfter($('#row' +id_module));
-                    //         //Insertion de la colonne des totaux par module
-                    //         for (var i = 1; i < nb_col; i++) {
-                    //             $('#row' + item.id).append('<div class="cellules cell_clickable titre droppable " id=' + item.id + '-' + i + '></div>');
-                    //         }
-                    //         $('#row' + item.id).append('<div class="cellules total  text-center" id=totm-' + item.id + '>0</div>');
-                    //         console.log('matiere' + item.id);
-                    //     }
-                    // });
-
+                    $('#row' + item.id).append('<div class="cellules total silver text-center" id=totm-' + item.id + ' >0</div>');
                 }
-                //////////////////////////////////////////////
-               ///click sur la div pour ajouter un créneau///
-              //////////////////////////////////////////////
+                ////////////////////////////////////////
+               ///génération des modules et matières///
+              ////////////////////////////////////////
                 $('.cell_clickable').click(function(){
                     var id_module_cell = $(this).attr('id');
                     $.get(baseurl + "?controle=MatiereController&action=showByModule&id=" + id_module_cell, function(data, status) {
@@ -158,17 +163,26 @@
                             var item = object[o];
                             $('<div class="row edt" id= "row' + item.id + '_matiere">' + '<div class="cellules cellule_matiere_' + item.id + ' titre droppable " id=' + item.id + '>' + item.nom + '</div>').insertAfter($('#row' +id_module_cell));
                             for (var i = 1; i < nb_col; i++) {
-                                $('#row' + item.id + '_matiere').append('<div class="cellules cellule_matiere_' + item.id + ' titre droppable" id=' + item.id + '-' + i + '></div>');
+                                $('#row' + item.id + '_matiere').append('<div class="cellules cell_mat cellule_matiere_' + item.id + ' titre droppable" id=' + item.id + '-' + i + '></div>');
                             }
-                            $('#row' + item.id + '_matiere').append('<div class="cellules cellule_matiere_' + item.id + ' total text-center" id=totm-' + item.id + '>0</div>');
+                            $('#row' + item.id + '_matiere').append('<div class="cellules silver total text-center" id=totm-'+id_module_cell+'-'+item.id + '>0</div>');
                             // alert(item.couleur);
-                            $('.cellule_matiere_' + item.id).css('background-color' , item.couleur);
+                            // $('.cellule_matiere_' + item.id).css('background-color' , item.couleur);
+                            $('.cellule_matiere_' + item.id).on('click',function(){
+                                $(this).html('<div class=" container_nb_heure container_heure_'+ item.id +' drag" style="background-color:'+item.couleur+'; width:100px; height:25px;">'+item.nbHeure+'</div>');
+                                $('.cell_mat').droppable();
+                                $('.drag').draggable();
+                                var cpt_tot_m = 0;
+                                cpt_tot_m = item.nbHeure ;
+                                $('#totm-'+id_module_cell+'-'+item.id).html(cpt_tot_m);
+                            });
                         }
                     });
                 });
                 $('.cell_clickable').trigger('click');
             });
-            
+        
+        
 
         $('#ajout_creneau').on('click', function(){
             $('#select_form').css("display", "block");

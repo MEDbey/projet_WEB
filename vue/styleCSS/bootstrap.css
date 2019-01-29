@@ -9041,7 +9041,8 @@ a.text-dark:hover, a.text-dark:focus {
 	clear:left
 }
 
-.cellules {	border: 0.5px solid #FFF; 
+
+.cellules {	border: 0.5px solid rgb(56, 56, 56); 
 			width: 10em;
 			float:left; 
 			padding-top:1em}
