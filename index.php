@@ -15,6 +15,6 @@
 		$cont->{$action}(); 
 	}
 	else {
-	require("vue/layout/edt_bis.php");
+	require("vue/layout/edt.php");
 	}
 ?>
