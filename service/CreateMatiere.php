@@ -15,5 +15,5 @@
     $stmt= $db->prepare($sql);
     $stmt->execute();
     echo $sql;
-    // header('location:..');
+    header('location:..');
 ?>
