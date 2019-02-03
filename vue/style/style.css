@@ -1,7 +1,11 @@
 * {border:0;padding:0;margin:0;}
 body 	{ padding-top:50px; margin-left:2em}
 .image-centree { display: block; margin-right: auto; margin-left: auto;  }
-
+.colorpicker {
+    border: solid thin black;
+    width: 200px;
+    height: 200px;
+}
 .couleur {	border: 4px solid #888; width: 10em; height:5em;
 			margin:0;
 			display:none;
@@ -13,10 +17,11 @@ body 	{ padding-top:50px; margin-left:2em}
 	clear:left
 }
 
-.cellules {	border: 4px solid #888; 
-			width: 10em;
-			float:left; 
-			padding-top:1em}
+.cellules {	
+	width: 10em;
+	float:left; 
+	padding-top:1em
+}
 			
 .pos {display:none} /*  les div internes de position disparaissent*/
 

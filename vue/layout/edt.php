@@ -19,9 +19,9 @@
 
 <body>
     <div class="container">
+    <?php require('require/options.php');?> 
         <div class="row">
           <div class="col-md-6">
-              <?php require'require/options.php';?>
               <div class="row">
                 <div class="zone col-md-6" id="btns">
                     <i class="fas fa-trash-alt" style="font-size:48px;"></i>

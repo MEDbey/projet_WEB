@@ -119,9 +119,29 @@ function initialize() {
                 });
                 initializeTotalModuleColumn(module.id, null);
             }
+            $.get(BASE_URL + "?controle=ModuleController&action=index", function(data, status) {
+                var object = JSON.parse(data);
+                for (var o in object) {
+                    var item = object[o];
+                    $('#select_module').append('<option id=' + item.id + '>' + item.nom + '</option>');
+                }
+            });
         } else {
             alert(STATUS_FAILED_MESSAGE);
         }
+    });
+
+
+    $('#select_module').on('change',function(){
+        var id = $(this).children(":selected").attr("id");
+        $('#label_matiere').css("display", "block");
+        $("#nom_matiere").css("display", "block");
+        $('#label_label').css("display", "block");
+        $("#lab_matiere").css("display", "block");
+        $('#form_create_mat').append("<input name='id_mod' value='" + id + "' hidden />");
+        var hexa = Math.floor( Math.random() * 0xFFFFFF );
+        var result_hexa = "#" + hexa.toString(16);
+        $('#form_create_mat').append("<input name='color_mat' value='" + result_hexa + "' hidden />");
     });
 };
 
@@ -336,8 +356,7 @@ function initializeTotalModuleColumn(id, course_id) {
  */
 function initializeModuleLine(module, nbColumn) {
     //Add title of the module on the line (first cell)
-    $('<div class="row edt" id=' + MODULE_TITRE + '-' + module.id + '><div class="cellules titre droppable blue text-center">'
-        + module.nom + '</div>').insertAfter($('#H'));
+    $('<div class="row edt" id=' + MODULE_TITRE + '-' + module.id + '><div class="cellules titre droppable blue text-center">'+ module.nom + '</div>').insertAfter($('#H'));
     //Add non clickable div in the module line
     for (let i = 1; i < nbColumn; i++) {
         $('#' + MODULE_TITRE + '-' + module.id).append('<div class="cellules titre droppable silver text-center"></div>');
@@ -352,9 +371,7 @@ function initializeCourseLine(course, module_id, nbColumn) {
     } else {
         color = "#a55eea";
     }
-    $('<div class="row edt" id=' + course.id + '><div class="cellules titre droppable text-center" style="background:' + color + '">'
-        + course.nom + '</div>').insertAfter($('#' + MODULE_TITRE + '-' + module_id));
-    //Add clickable div in the course line
+    $('<div class="row edt" id=' + course.id + '><div class="cellules titre droppable text-center" style="background:' + color + '">'+ course.nom + '</div>').insertAfter($('#' + MODULE_TITRE + '-' + module_id));
     for (let i = 1; i < nbColumn; i++) {
         $('#' + course.id).append('<div class="cellules titre droppable white text-center ' + COLUMN_CLASS + '-' + i + '"></div>');
     }
