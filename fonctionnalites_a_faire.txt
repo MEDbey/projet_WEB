@@ -1,7 +1,0 @@
-ajout d'une matiere : 
-
-    avoir la liste des modules pour le selectionné en adequation avec la metiere + period + ue + nom + label (le reste on vera plus tard)
-
-    rendre l'emploi du temps dynamique:
-        - ajout d'un créneau en cliquant sur la case
-        - drag and drop des créneau sur des périodes

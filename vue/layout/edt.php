@@ -12,7 +12,7 @@
    <script src="./vue/scripts/jquery-3.3.1.min.js"></script>
    <script src="./vue/scripts/bootstrap.js"></script>
    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-   <script src="./vue/scripts/script2.js"></script>
+   <script src="./vue/scripts/script.js"></script>
 
 </head>
 <!-- BODY -->
