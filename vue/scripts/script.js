@@ -8,7 +8,7 @@ const MODULE_CLASS_TITLE = "module";
 const COURSE_CLASS_TITLE = "course";
 const PERIOD_TOTAL_ID = "lineTot";
 const STATUS_SUCCESS = "success";
-const STATUS_FAILED_MESSAGE = "HTTP_REQUEST failed. Please contact Ayaz.";
+const STATUS_FAILED_MESSAGE = "HTTP_REQUEST failed.";
 
 /**
  * --------------------------------------------------------------------------------------------------------------------------
